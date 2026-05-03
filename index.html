@@ -16,480 +16,460 @@
       --ink-soft: #2c2823;
       --ink-muted: #6f6a62;
       --rule: #d8d1c2;
+      --rule-strong: #14110f;
       --accent: #b8261d;
       --gold: #d4a373;
-      --image-fade: linear-gradient(180deg, rgba(20,17,15,0) 0%, rgba(20,17,15,0.05) 50%, rgba(20,17,15,0.55) 100%);
+      --image-fade: linear-gradient(180deg, rgba(20,17,15,0) 30%, rgba(20,17,15,0.65) 100%);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     html, body { height: 100%; }
 
     body {
       background: var(--paper-deep);
       color: var(--ink);
       font-family: 'Fraunces', Georgia, serif;
-      overflow: hidden;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
 
-    main {
-      height: 100dvh;
-      max-width: 560px;
+    .paper {
+      max-width: 640px;
       margin: 0 auto;
       background: var(--paper);
-      overflow-y: auto;
-      scroll-snap-type: y mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
+      min-height: 100dvh;
       box-shadow: 0 0 60px rgba(20,17,15,0.06);
+      position: relative;
     }
-    main::-webkit-scrollbar { display: none; }
 
-    /* progress chip */
-    .progress {
-      position: fixed;
-      top: max(env(safe-area-inset-top), 14px);
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 20;
-      font-family: 'Inter', sans-serif;
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      color: var(--ink-muted);
-      background: rgba(243,238,227,0.86);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      padding: 6px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(20,17,15,0.06);
-      transition: opacity .25s ease, color .25s, background .25s;
-      opacity: 0;
-      pointer-events: none;
-    }
-    .progress.visible { opacity: 1; }
-    .progress.over-dark {
-      color: var(--paper);
-      background: rgba(20,17,15,0.55);
-      border-color: rgba(243,238,227,0.12);
-    }
+    a { color: inherit; text-decoration: none; }
 
     /* ============ MASTHEAD ============ */
     .masthead {
-      min-height: 100dvh;
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
-      padding: 32px 28px max(env(safe-area-inset-bottom), 28px);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      padding: 36px 28px 24px;
+      border-bottom: 4px double var(--rule-strong);
       position: relative;
-      overflow: hidden;
     }
-
-    .masthead::before {
-      content: '';
-      position: absolute;
-      left: 28px;
-      right: 28px;
-      top: 76px;
-      height: 1px;
-      background: var(--ink);
-      opacity: 0.85;
-    }
-
-    .masthead-top {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .brand {
-      font-family: 'Fraunces', serif;
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-    }
-
-    .edition-meta {
-      font-family: 'Inter', sans-serif;
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      color: var(--ink-muted);
-      text-transform: uppercase;
-    }
-
-    .masthead-hero {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 28px;
-      max-width: 480px;
-      padding: 24px 0;
-    }
-
-    .masthead-hero .kicker {
-      font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .masthead-hero .kicker::before {
-      content: '';
-      width: 28px;
-      height: 1px;
-      background: var(--accent);
-    }
-
-    .masthead-hero h1 {
-      font-family: 'Fraunces', serif;
-      font-style: italic;
-      font-weight: 500;
-      font-size: clamp(44px, 13vw, 76px);
-      line-height: 0.94;
-      letter-spacing: -0.025em;
-      color: var(--ink);
-    }
-    .masthead-hero h1 em {
-      font-style: normal;
-      color: var(--accent);
-    }
-
-    .masthead-hero p {
-      font-family: 'Fraunces', serif;
-      font-weight: 400;
-      font-size: 17px;
-      line-height: 1.45;
-      color: var(--ink-muted);
-      max-width: 340px;
-    }
-
-    .masthead-foot {
+    .masthead-row {
       display: flex;
       justify-content: space-between;
-      align-items: flex-end;
+      align-items: baseline;
       gap: 16px;
       font-family: 'Inter', sans-serif;
       font-size: 10px;
       font-weight: 500;
-      letter-spacing: 0.2em;
-      color: var(--ink-muted);
+      letter-spacing: 0.22em;
       text-transform: uppercase;
+      color: var(--ink-muted);
     }
-    .stats { line-height: 1.6; }
-    .stats strong {
+    .masthead-row .left, .masthead-row .right { white-space: nowrap; }
+    .wordmark {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: clamp(48px, 12vw, 72px);
+      line-height: 1;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin: 16px 0 14px;
+    }
+    .wordmark em { font-style: normal; color: var(--accent); }
+    .tagline {
+      font-family: 'Fraunces', serif;
+      font-size: 14px;
+      line-height: 1.4;
+      color: var(--ink-muted);
+      max-width: 360px;
+      font-style: italic;
+    }
+
+    /* ============ TAB BAR ============ */
+    .tabs-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .tabs {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      padding: 12px 28px;
+      scroll-behavior: smooth;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab {
+      flex-shrink: 0;
+      padding: 6px 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all .2s;
+      white-space: nowrap;
+    }
+    .tab:hover { color: var(--ink); }
+    .tab.active {
+      color: var(--paper);
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+    .tab .count {
+      opacity: 0.55;
+      margin-left: 6px;
+      font-feature-settings: 'tnum';
+    }
+
+    /* ============ SECTION FLAG ============ */
+    .section {
+      padding: 0 28px;
+      scroll-margin-top: 56px;
+    }
+    .section-flag {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 56px 0 20px;
+      border-bottom: 1px solid var(--rule-strong);
+      margin-bottom: 32px;
+    }
+    .section-flag .name {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: clamp(40px, 10vw, 60px);
+      line-height: 0.95;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+    }
+    .section-flag .name em {
+      font-style: normal;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .section-flag .meta {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      text-align: right;
+      line-height: 1.6;
+    }
+    .section-flag .meta strong {
       display: block;
       font-family: 'Fraunces', serif;
-      font-weight: 500;
       font-style: italic;
-      font-size: 22px;
+      font-weight: 500;
+      font-size: 18px;
       letter-spacing: -0.01em;
       color: var(--ink);
       text-transform: none;
     }
 
-    .swipe-hint {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 6px;
+    /* ============ FRONT PAGE ============ */
+    .front {
+      padding: 0 28px 48px;
     }
-    .swipe-hint .arrow {
-      font-family: 'Fraunces', serif;
-      font-style: italic;
-      font-size: 28px;
-      line-height: 1;
+    .front-flag {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 32px 0 14px;
+      border-bottom: 1px solid var(--rule-strong);
+      margin-bottom: 24px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
       color: var(--ink);
-      animation: pulse 2s infinite;
     }
-    @keyframes pulse {
-      0%, 100% { opacity: 0.35; transform: translateY(0); }
-      50%      { opacity: 1;    transform: translateY(4px); }
-    }
+    .front-flag .right { color: var(--ink-muted); font-weight: 500; }
 
-    /* ============ CARD (text) ============ */
-    .card {
-      min-height: 100dvh;
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
-      padding: 56px 28px max(env(safe-area-inset-bottom), 32px);
+    .lead {
       display: flex;
       flex-direction: column;
-      position: relative;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 28px;
       cursor: pointer;
-      text-decoration: none;
-      color: inherit;
-      isolation: isolate;
-      overflow: hidden;
-      transition: background-color .2s;
     }
-    .card:active { background-color: var(--paper-deep); }
-
-    .card-num {
-      position: absolute;
-      top: 32px;
-      right: 28px;
-      font-family: 'Fraunces', serif;
-      font-style: italic;
-      font-weight: 300;
-      font-size: 56px;
-      line-height: 1;
-      letter-spacing: -0.04em;
-      color: var(--ink);
-      opacity: 0.18;
-      z-index: 1;
-    }
-
-    .card-letter {
-      position: absolute;
-      top: -8vh;
-      right: -12vw;
-      font-family: 'Fraunces', serif;
-      font-weight: 700;
-      font-size: 78vw;
-      line-height: 0.78;
-      color: var(--ink);
-      opacity: 0.045;
-      pointer-events: none;
-      user-select: none;
-      z-index: 0;
-    }
-
-    .card-kicker {
+    .lead .kicker {
       font-family: 'Inter', sans-serif;
       font-size: 10px;
       font-weight: 600;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--accent);
+      margin-bottom: 16px;
       display: flex;
       align-items: center;
-      gap: 12px;
-      position: relative;
-      z-index: 2;
+      gap: 10px;
     }
-    .card-kicker::before {
+    .lead .kicker::before {
       content: '';
-      width: 28px;
+      width: 22px;
       height: 1px;
       background: var(--accent);
     }
-
-    .card-tag {
+    .lead .image {
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      background: var(--paper-deep);
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .lead .image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center 28%;
+    }
+    .lead .image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--image-fade);
+      pointer-events: none;
+    }
+    .lead .image .caption {
+      position: absolute;
+      bottom: 12px;
+      left: 14px;
+      right: 14px;
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--paper);
+      z-index: 2;
+      opacity: 0.85;
+    }
+    .lead .headline {
       font-family: 'Fraunces', serif;
       font-style: italic;
       font-weight: 500;
-      font-size: clamp(54px, 16vw, 92px);
-      line-height: 0.92;
-      letter-spacing: -0.03em;
+      font-size: clamp(34px, 7.5vw, 46px);
+      line-height: 1.02;
+      letter-spacing: -0.025em;
       color: var(--ink);
-      margin: 36px 0 28px;
-      position: relative;
-      z-index: 2;
+      margin-bottom: 18px;
     }
-    .card-tag::after {
-      content: '.';
-      color: var(--accent);
-      margin-left: -0.05em;
-    }
-
-    .card-summary {
+    .lead .summary {
       font-family: 'Fraunces', serif;
       font-weight: 400;
-      font-size: 21px;
-      line-height: 1.42;
+      font-size: 18px;
+      line-height: 1.5;
       color: var(--ink-soft);
-      max-width: 480px;
-      margin-bottom: auto;
-      padding-bottom: 32px;
-      position: relative;
-      z-index: 2;
+      margin-bottom: 18px;
+      max-width: 520px;
     }
-    .card-summary::first-letter {
+    .lead .summary::first-letter {
       font-family: 'Fraunces', serif;
       font-weight: 700;
-      font-size: 1.05em;
+      font-style: normal;
+      font-size: 3.2em;
+      float: left;
+      line-height: 0.85;
+      margin: 4px 10px 0 0;
+      color: var(--ink);
     }
-
-    .card-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      padding-top: 14px;
-      border-top: 1px solid var(--rule);
+    .lead .meta {
       font-family: 'Inter', sans-serif;
       font-size: 10px;
       font-weight: 500;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--ink-muted);
-      position: relative;
-      z-index: 2;
     }
-    .card-read {
+
+    .front-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    /* ============ STORY CARD (compact) ============ */
+    .story {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--rule);
+      cursor: pointer;
+      position: relative;
+    }
+    .story:last-child { border-bottom: none; }
+    .story.with-image {
+      grid-template-columns: 1fr 104px;
+      grid-template-rows: auto auto auto;
+      gap: 4px 14px;
+    }
+    .story.with-image .image {
+      grid-column: 2;
+      grid-row: 1 / 4;
+      aspect-ratio: 4 / 5;
+      background: var(--paper-deep);
+      width: 104px;
+      overflow: hidden;
+      position: relative;
+    }
+    .story.with-image .image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center 28%;
+    }
+    .story .kicker {
+      font-family: 'Inter', sans-serif;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .story .kicker .dot {
+      width: 4px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex: 0 0 auto;
+    }
+    .story .headline {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 22px;
+      line-height: 1.15;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+    }
+    .story .summary {
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 1.45;
+      color: var(--ink-soft);
+    }
+    .story .meta {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-top: 4px;
+    }
+    .story .meta .read {
       color: var(--ink);
       font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
     }
-    .card-read::after {
-      content: '→';
+    .story .meta .read::after {
+      content: ' →';
       font-family: 'Fraunces', serif;
       font-style: italic;
-      font-size: 14px;
-      letter-spacing: 0;
-      transition: transform .2s;
-    }
-    .card:hover .card-read::after { transform: translateX(4px); }
-
-    /* review flag */
-    .card.needs-review .card-kicker::after {
-      content: '· flagged';
-      color: var(--ink-muted);
-      letter-spacing: 0.15em;
     }
 
-    /* ============ CARD (image) ============ */
-    .card.has-image {
-      padding: 0;
-      background: var(--ink);
-      color: var(--paper);
+    /* hero variant inside section */
+    .story.hero {
+      grid-template-columns: 1fr;
+      padding-bottom: 32px;
     }
-    .card.has-image:active { background-color: #000; }
-
-    .card.has-image .card-image {
-      flex: 1.1;
-      min-height: 50dvh;
-      background-size: cover;
-      background-position: center;
+    .story.hero .image {
+      grid-column: 1;
+      grid-row: auto;
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      margin-bottom: 16px;
+      background: var(--paper-deep);
+      overflow: hidden;
       position: relative;
     }
-    .card.has-image .card-image::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--image-fade);
+    .story.hero .image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center 28%;
     }
-    .card.has-image .image-num {
-      position: absolute;
-      top: 22px;
-      right: 22px;
-      font-family: 'Fraunces', serif;
-      font-style: italic;
-      font-weight: 300;
-      font-size: 38px;
-      line-height: 1;
-      color: var(--paper);
-      opacity: 0.85;
-      mix-blend-mode: difference;
-      z-index: 2;
-    }
-
-    .card.has-image .card-body {
-      padding: 32px 28px max(env(safe-area-inset-bottom), 32px);
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      background: var(--ink);
-      color: var(--paper);
-    }
-    .card.has-image .card-kicker {
-      color: var(--gold);
-    }
-    .card.has-image .card-kicker::before {
-      background: var(--gold);
-    }
-    .card.has-image .card-tag {
-      color: var(--paper);
-      margin: 0;
-      font-size: clamp(40px, 11vw, 60px);
-    }
-    .card.has-image .card-tag::after { color: var(--gold); }
-    .card.has-image .card-summary {
-      color: rgba(243,238,227,0.82);
-      padding-bottom: 0;
-      margin-bottom: 0;
-      font-size: 19px;
-    }
-    .card.has-image .card-meta {
-      color: rgba(243,238,227,0.55);
-      border-top-color: rgba(243,238,227,0.15);
-    }
-    .card.has-image .card-read { color: var(--paper); }
+    .story.hero .headline { font-size: 28px; }
 
     /* ============ END CARD ============ */
-    .end-card {
-      min-height: 100dvh;
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 32px;
+    .end {
+      padding: 80px 28px;
       text-align: center;
-      gap: 32px;
-      position: relative;
+      border-top: 4px double var(--rule-strong);
+      margin-top: 24px;
     }
-    .end-card::before, .end-card::after {
-      content: '';
-      position: absolute;
-      left: 28px;
-      right: 28px;
-      height: 1px;
-      background: var(--rule);
-    }
-    .end-card::before { top: 28%; }
-    .end-card::after  { bottom: 28%; }
-    .end-mark {
+    .end .mark {
       font-family: 'Fraunces', serif;
       font-size: 22px;
       letter-spacing: 0.8em;
       color: var(--accent);
       padding-left: 0.8em;
+      margin-bottom: 24px;
     }
-    .end-text {
+    .end .text {
       font-family: 'Fraunces', serif;
       font-style: italic;
       font-weight: 500;
-      font-size: clamp(40px, 11vw, 64px);
+      font-size: clamp(40px, 10vw, 56px);
       line-height: 1;
       letter-spacing: -0.025em;
       color: var(--ink);
+      margin-bottom: 18px;
     }
-    .end-text em { font-style: normal; color: var(--accent); }
-    .end-meta {
+    .end .text em { font-style: normal; color: var(--accent); }
+    .end .meta {
       font-family: 'Inter', sans-serif;
       font-size: 10px;
       font-weight: 500;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--ink-muted);
-      max-width: 280px;
-      line-height: 1.6;
+    }
+    .end .colophon {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--rule);
+      font-family: 'Fraunces', serif;
+      font-size: 13px;
+      font-style: italic;
+      color: var(--ink-muted);
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
     }
 
     /* ============ ERROR ============ */
     .error {
-      min-height: 100dvh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 18px;
-      padding: 32px;
+      padding: 80px 28px;
       text-align: center;
     }
     .error h2 {
@@ -497,15 +477,15 @@
       font-style: italic;
       font-weight: 500;
       font-size: 36px;
-      line-height: 1;
-      color: var(--ink);
+      margin-bottom: 16px;
     }
     .error p {
       font-family: 'Inter', sans-serif;
       font-size: 13px;
-      line-height: 1.55;
+      line-height: 1.6;
       color: var(--ink-muted);
       max-width: 360px;
+      margin: 0 auto 8px;
     }
     .error code {
       font-family: 'JetBrains Mono', ui-monospace, monospace;
@@ -515,6 +495,13 @@
       font-size: 12px;
       color: var(--ink);
     }
+
+    /* small-screen tweaks */
+    @media (max-width: 380px) {
+      .masthead, .section, .front { padding-left: 22px; padding-right: 22px; }
+      .tabs { padding-left: 22px; padding-right: 22px; }
+      .lead .summary::first-letter { font-size: 2.6em; }
+    }
   </style>
 </head>
 <body>
@@ -522,7 +509,7 @@
 {
   "generated_at": "2026-05-01T16:55:53Z",
   "data_now": "2026-04-27T13:05:47",
-  "total_cards": 16,
+  "total_cards": 15,
   "cards": [
     {
       "position": 1,
@@ -554,20 +541,6 @@
     },
     {
       "position": 3,
-      "topic_id": "0d1b3aa5-518a-4651-98d9-5c210c1fac89",
-      "msid": "130490526",
-      "section": "politics_other",
-      "section_family": "politics",
-      "headline": "Chadha Defects",
-      "summary": "Raghav Chadha and six other AAP Rajya Sabha MPs resigned and merged with BJP.",
-      "image_url": "",
-      "url_msid": "130490526",
-      "published_at": "2026-04-24T18:40:05",
-      "needs_review": false,
-      "review_reason": ""
-    },
-    {
-      "position": 4,
       "topic_id": "feb0351b-d210-4a29-97a7-44be1ccdf332",
       "msid": "130526301",
       "section": "justice_enforcement",
@@ -581,7 +554,7 @@
       "review_reason": ""
     },
     {
-      "position": 5,
+      "position": 4,
       "topic_id": "6d209c3d-a4d1-47f2-b4de-b3dadbf35e9f",
       "msid": "130503239",
       "section": "sports_other",
@@ -595,7 +568,7 @@
       "review_reason": ""
     },
     {
-      "position": 6,
+      "position": 5,
       "topic_id": "f5df261b-8a1c-4a8c-85a8-e160d74218dd",
       "msid": "130519343",
       "section": "war_and_peace_other",
@@ -609,7 +582,7 @@
       "review_reason": ""
     },
     {
-      "position": 7,
+      "position": 6,
       "topic_id": "d1f2d7c1-b233-437e-a348-cc8abaee6de9",
       "msid": "130524971",
       "section": "sports_cricket",
@@ -623,7 +596,7 @@
       "review_reason": ""
     },
     {
-      "position": 8,
+      "position": 7,
       "topic_id": "f3df8bbd-1727-458f-aca2-b67c2b24eaae",
       "msid": "130528457",
       "section": "justice_enforcement",
@@ -637,7 +610,7 @@
       "review_reason": ""
     },
     {
-      "position": 9,
+      "position": 8,
       "topic_id": "3f46ecc3-cf66-41e0-96f0-e9233a16d0c3",
       "msid": "130531024",
       "section": "economy_other",
@@ -651,7 +624,7 @@
       "review_reason": ""
     },
     {
-      "position": 10,
+      "position": 9,
       "topic_id": "18f385de-d053-4415-b980-761769768623",
       "msid": "130528984",
       "section": "economy_other",
@@ -665,7 +638,7 @@
       "review_reason": ""
     },
     {
-      "position": 11,
+      "position": 10,
       "topic_id": "3156c4c6-d8b6-463b-b79c-5570b6d55112",
       "msid": "130522881",
       "section": "science_and_tech_public_interest",
@@ -679,13 +652,13 @@
       "review_reason": ""
     },
     {
-      "position": 12,
+      "position": 11,
       "topic_id": "4b4e7872-796f-4bfc-87cb-4a70857621e8",
       "msid": "130527030",
       "section": "business_other",
       "section_family": "business",
       "headline": "Adani Capex",
-      "summary": "Adani Green to add 10 GWh battery storage in FY27 with ₹15,000cr investment.",
+      "summary": "Adani Green to add 10 GWh battery storage in FY27 with \u20b915,000cr investment.",
       "image_url": "",
       "url_msid": "130527030",
       "published_at": "2026-04-26T11:18:29",
@@ -693,7 +666,7 @@
       "review_reason": ""
     },
     {
-      "position": 13,
+      "position": 12,
       "topic_id": "d7c4ea0d-8e03-4c6f-8e62-f3c4311d2afb",
       "msid": "130503349",
       "section": "business_other",
@@ -707,7 +680,7 @@
       "review_reason": ""
     },
     {
-      "position": 14,
+      "position": 13,
       "topic_id": "3b080070-c06a-4bd0-a288-58a8833be683",
       "msid": "130529109",
       "section": "science_and_tech_public_interest",
@@ -721,7 +694,7 @@
       "review_reason": ""
     },
     {
-      "position": 15,
+      "position": 14,
       "topic_id": "8025a4c4-1c13-4a8a-ba30-74606264ad41",
       "msid": "130526942",
       "section": "health",
@@ -735,7 +708,7 @@
       "review_reason": ""
     },
     {
-      "position": 16,
+      "position": 15,
       "topic_id": "db0f9abd-aae0-4e36-9f27-0e619f2a52c9",
       "msid": "130531391",
       "section": "health",
@@ -752,41 +725,65 @@
 }
 <!--END_INLINE_DATA--></script>
 
-  <div class="progress" id="progress" aria-live="polite">— / —</div>
-
-  <main id="deck">
-    <section class="masthead" aria-label="Edition cover">
-      <div class="masthead-top">
-        <div class="brand">Catch Me Up</div>
-        <div class="edition-meta" id="edition-meta">Loading edition…</div>
+  <div class="paper" id="paper">
+    <header class="masthead">
+      <div class="masthead-row">
+        <span class="left">Vol. 1 · No. <span id="edition-no">—</span></span>
+        <span class="right" id="edition-date">—</span>
       </div>
+      <div class="wordmark">Catch <em>Me</em> Up</div>
+      <div class="tagline">A finite morning edition. The news, in tags. Tap any story to open the original.</div>
+    </header>
 
-      <div class="masthead-hero">
-        <div class="kicker">A finite edition</div>
-        <h1>What changed in the last <em>12 hours</em>.</h1>
-        <p>Every story, one tag. Tap any card to open the original.</p>
-      </div>
+    <nav class="tabs-wrap" id="tabs-wrap">
+      <div class="tabs" id="tabs"></div>
+    </nav>
 
-      <div class="masthead-foot">
-        <div class="stats" id="masthead-stats">
-          <strong>—</strong>
-          <span>stories · <span id="read-time">— min</span></span>
-        </div>
-        <div class="swipe-hint">
-          <span>Scroll</span>
-          <span class="arrow">↓</span>
-        </div>
-      </div>
-    </section>
-  </main>
+    <main id="paper-body"></main>
+  </div>
 
   <script>
-    const IMAGE_POSITIONS = new Set([1, 4, 8, 12]);
     const TOI_PHOTO = id => `https://static.toiimg.com/photo.cms?photoid=${id}`;
     const TOI_ARTICLE = msid => `https://timesofindia.indiatimes.com/articleshow/${msid}.cms`;
 
-    const $ = sel => document.querySelector(sel);
-    const $$ = sel => Array.from(document.querySelectorAll(sel));
+    const FAMILY_LABEL = {
+      politics: 'Politics',
+      war: 'World',
+      justice: 'Justice',
+      sports: 'Sports',
+      economy: 'Economy',
+      business: 'Business',
+      science: 'Tech',
+      health: 'Health',
+      lifestyle: 'Living',
+      religion: 'Society',
+      labour: 'Work',
+      governance: 'Government',
+      disaster: 'Disaster',
+      environment: 'Climate',
+      society: 'Society',
+    };
+
+    const FAMILY_BLURB = {
+      politics: 'Power, parties, parliament.',
+      war: 'Conflict, diplomacy, the world.',
+      justice: 'Courts, enforcement, crime.',
+      sports: 'Pitches, courts, rinks.',
+      economy: 'Markets, trade, money.',
+      business: 'Corporates, deals, leadership.',
+      science: 'Tech, AI, the future of work.',
+      health: 'Medicine, public health, science.',
+      lifestyle: 'Culture, food, leisure.',
+      religion: 'Faith, festivals, society.',
+      labour: 'Jobs, wages, workplaces.',
+      governance: 'The state, policy, the centre.',
+      disaster: 'Earthquakes, floods, fires.',
+      environment: 'Climate, planet, ecology.',
+      society: 'People, places, life.',
+    };
+
+    const $ = s => document.querySelector(s);
+    const $$ = s => Array.from(document.querySelectorAll(s));
 
     function escapeHTML(s) {
       const d = document.createElement('div');
@@ -794,28 +791,37 @@
       return d.innerHTML;
     }
 
-    function fmtDate(iso) {
+    function fmtDate(iso, opts) {
       if (!iso) return '';
       const d = new Date(iso);
       if (isNaN(d)) return iso;
-      return d.toLocaleString('en-IN', {
+      return d.toLocaleString('en-IN', opts || {
         day: 'numeric', month: 'short',
         hour: '2-digit', minute: '2-digit', hour12: false,
       });
     }
 
-    function pad2(n) { return String(n).padStart(2, '0'); }
+    function fmtEditionDate(iso) {
+      if (!iso) return '';
+      const d = new Date(iso);
+      if (isNaN(d)) return iso;
+      return d.toLocaleString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    }
+
+    function familyLabel(fam) {
+      return FAMILY_LABEL[fam] || (fam ? fam.charAt(0).toUpperCase() + fam.slice(1) : 'Story');
+    }
+    function familyBlurb(fam) { return FAMILY_BLURB[fam] || ''; }
 
     function preload(url) {
-      return new Promise((resolve, reject) => {
+      return new Promise((res, rej) => {
         const img = new Image();
-        const t = setTimeout(() => reject(new Error('timeout')), 5000);
-        img.onload = () => { clearTimeout(t); resolve(url); };
-        img.onerror = () => { clearTimeout(t); reject(new Error('error')); };
+        const t = setTimeout(() => rej(), 5000);
+        img.onload = () => { clearTimeout(t); res(url); };
+        img.onerror = () => { clearTimeout(t); rej(); };
         img.src = url;
       });
     }
-
     async function resolveImage(card) {
       const tries = [card.image_url, TOI_PHOTO(card.msid)].filter(Boolean);
       for (const url of tries) {
@@ -824,81 +830,182 @@
       return null;
     }
 
-    function kickerFor(c) {
-      const fam = (c.section_family || '').toUpperCase();
-      const sec = (c.section || '').replace(/_/g, ' ').toUpperCase();
-      return fam || sec || 'STORY';
+    function pickFrontPage(cards, n = 4) {
+      const front = [];
+      const seen = new Set();
+      for (const c of cards) {
+        if (seen.has(c.section_family)) continue;
+        front.push(c);
+        seen.add(c.section_family);
+        if (front.length >= n) break;
+      }
+      // if fewer than n unique families, top up with next-best regardless
+      if (front.length < n) {
+        for (const c of cards) {
+          if (front.includes(c)) continue;
+          front.push(c);
+          if (front.length >= n) break;
+        }
+      }
+      return front;
     }
 
-    function renderText(c) {
-      const isLetter = c.position % 3 !== 1;  // ~2/3 of text cards get letter; rest get number-only
-      const ch = (c.section_family || c.section || '?').charAt(0).toUpperCase();
-      const reviewClass = c.needs_review ? ' needs-review' : '';
+    function groupBySection(cards) {
+      const order = [];
+      const groups = new Map();
+      for (const c of cards) {
+        const key = c.section_family || 'other';
+        if (!groups.has(key)) {
+          groups.set(key, []);
+          order.push(key);
+        }
+        groups.get(key).push(c);
+      }
+      return order.map(k => ({ family: k, cards: groups.get(k) }));
+    }
+
+    function renderLead(c, imageUrl) {
+      const img = imageUrl ? `
+        <div class="image">
+          <img src="${imageUrl}" alt="" loading="lazy" decoding="async">
+          <span class="caption">${escapeHTML(familyLabel(c.section_family))} · MSID ${escapeHTML(c.msid)}</span>
+        </div>` : '';
       return `
-        <a class="card${reviewClass}"
-           data-position="${c.position}"
-           data-image="false"
-           href="${TOI_ARTICLE(c.msid)}"
-           target="_blank" rel="noopener noreferrer">
-          ${isLetter ? `<span class="card-letter" aria-hidden="true">${ch}</span>` : ''}
-          <span class="card-num">${pad2(c.position)}</span>
-          <div class="card-kicker">${escapeHTML(kickerFor(c))}</div>
-          <h2 class="card-tag">${escapeHTML(c.headline)}</h2>
-          <p class="card-summary">${escapeHTML(c.summary)}</p>
-          <div class="card-meta">
+        <a class="lead" href="${TOI_ARTICLE(c.msid)}" target="_blank" rel="noopener">
+          <div class="kicker">Lead · ${escapeHTML(familyLabel(c.section_family))}</div>
+          ${img}
+          <h2 class="headline">${escapeHTML(c.headline)}</h2>
+          <p class="summary">${escapeHTML(c.summary)}</p>
+          <div class="meta">${escapeHTML(fmtDate(c.published_at))} · Read story →</div>
+        </a>`;
+    }
+
+    function renderStory(c, imageUrl, opts = {}) {
+      const isHero = !!opts.hero;
+      const klass = isHero ? 'story hero' : (imageUrl ? 'story with-image' : 'story');
+      const img = imageUrl ? `<div class="image"><img src="${imageUrl}" alt="" loading="lazy" decoding="async"></div>` : '';
+      return `
+        <a class="${klass}" href="${TOI_ARTICLE(c.msid)}" target="_blank" rel="noopener">
+          ${img}
+          <div class="kicker"><span class="dot"></span>${escapeHTML(familyLabel(c.section_family))}</div>
+          <h3 class="headline">${escapeHTML(c.headline)}</h3>
+          <p class="summary">${escapeHTML(c.summary)}</p>
+          <div class="meta">
             <span>${escapeHTML(fmtDate(c.published_at))}</span>
-            <span class="card-read">Read story</span>
+            <span class="read">Read</span>
           </div>
         </a>`;
     }
 
-    function renderImage(c, imageUrl) {
-      const reviewClass = c.needs_review ? ' needs-review' : '';
+    function renderFront(cards, images) {
+      const lead = cards[0];
+      const rest = cards.slice(1);
       return `
-        <a class="card has-image${reviewClass}"
-           data-position="${c.position}"
-           data-image="true"
-           href="${TOI_ARTICLE(c.msid)}"
-           target="_blank" rel="noopener noreferrer">
-          <div class="card-image" style="background-image:url('${imageUrl}')">
-            <span class="image-num">${pad2(c.position)}</span>
+        <section class="front" id="sec-front" data-section="front">
+          <div class="front-flag">
+            <span>Front Page</span>
+            <span class="right">Top ${cards.length} of ${images._total}</span>
           </div>
-          <div class="card-body">
-            <div class="card-kicker">${escapeHTML(kickerFor(c))}</div>
-            <h2 class="card-tag">${escapeHTML(c.headline)}</h2>
-            <p class="card-summary">${escapeHTML(c.summary)}</p>
-            <div class="card-meta">
-              <span>${escapeHTML(fmtDate(c.published_at))}</span>
-              <span class="card-read">Read story</span>
-            </div>
-          </div>
-        </a>`;
-    }
-
-    function renderEnd(data) {
-      return `
-        <section class="end-card" data-position="${data.total_cards + 1}" data-end="true">
-          <div class="end-mark">·  ·  ·</div>
-          <div class="end-text">You're <em>caught up</em>.</div>
-          <div class="end-meta">
-            ${data.total_cards} stories · edition closed at ${fmtDate(data.generated_at)}
+          ${renderLead(lead, images[lead.msid] || null)}
+          <div class="front-grid">
+            ${rest.map(c => renderStory(c, images[c.msid] || null)).join('')}
           </div>
         </section>`;
     }
 
+    function renderSection(group, images, idx) {
+      const fam = group.family;
+      const label = familyLabel(fam);
+      const blurb = familyBlurb(fam);
+      const cards = group.cards;
+      // give the first card in each section a hero treatment if it has an image
+      const first = cards[0];
+      const firstImg = images[first.msid] || null;
+      const firstHTML = renderStory(first, firstImg, { hero: !!firstImg });
+      const restHTML = cards.slice(1).map(c => renderStory(c, images[c.msid] || null)).join('');
+      return `
+        <section class="section" id="sec-${fam}" data-section="${fam}">
+          <div class="section-flag">
+            <div class="name">${escapeHTML(label)}<em>.</em></div>
+            <div class="meta">
+              <strong>${cards.length}</strong>
+              ${cards.length === 1 ? 'story' : 'stories'}
+              ${blurb ? `<br><span style="font-style:italic;font-weight:400;letter-spacing:0;font-size:11px;text-transform:none;color:var(--ink-muted)">${escapeHTML(blurb)}</span>` : ''}
+            </div>
+          </div>
+          ${firstHTML}${restHTML}
+        </section>`;
+    }
+
+    function renderEnd(data) {
+      return `
+        <section class="end">
+          <div class="mark">·  ·  ·</div>
+          <div class="text">You're <em>caught up</em>.</div>
+          <div class="meta">${data.total_cards} stories · edition closed at ${fmtDate(data.generated_at)}</div>
+          <div class="colophon">A finite, daily edition. Built to be read in five minutes and put down.</div>
+        </section>`;
+    }
+
+    function renderTabs(sections) {
+      const tabsEl = $('#tabs');
+      const items = [{ key: 'front', label: 'Front', count: null }]
+        .concat(sections.map(s => ({ key: s.family, label: familyLabel(s.family), count: s.cards.length })));
+      tabsEl.innerHTML = items.map((t, i) => `
+        <button class="tab${i === 0 ? ' active' : ''}" data-target="sec-${t.key}">
+          ${escapeHTML(t.label)}${t.count != null ? `<span class="count">${t.count}</span>` : ''}
+        </button>
+      `).join('');
+      tabsEl.addEventListener('click', e => {
+        const btn = e.target.closest('.tab');
+        if (!btn) return;
+        const target = document.getElementById(btn.dataset.target);
+        if (target) {
+          const offset = $('#tabs-wrap').offsetHeight;
+          const top = target.getBoundingClientRect().top + window.scrollY - offset - 8;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      });
+    }
+
+    function setupSpy() {
+      const tabsEl = $('#tabs');
+      const tabs = $$('.tab');
+      const wrapH = $('#tabs-wrap').offsetHeight;
+      const sections = $$('section[data-section]');
+      const map = new Map(sections.map(s => [s.id, s]));
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(en => {
+          if (en.isIntersecting) {
+            const id = en.target.id;
+            tabs.forEach(t => {
+              const active = t.dataset.target === id;
+              t.classList.toggle('active', active);
+              if (active) {
+                const r = t.getBoundingClientRect();
+                const wr = tabsEl.getBoundingClientRect();
+                if (r.left < wr.left || r.right > wr.right) {
+                  t.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                }
+              }
+            });
+          }
+        });
+      }, { rootMargin: `-${wrapH + 12}px 0px -65% 0px`, threshold: 0 });
+      sections.forEach(s => observer.observe(s));
+    }
+
     function showError(msg) {
-      const deck = $('#deck');
-      deck.innerHTML = `
+      $('#paper-body').innerHTML = `
         <div class="error">
           <h2>No edition yet.</h2>
-          <p>Generate <code>output/cards.json</code> using the rewrite prompt, then refresh.</p>
+          <p>Generate <code>output/cards.json</code> with the rewrite prompt, then refresh.</p>
           <p>Tip: serve the project root with <code>python3 -m http.server 8000</code> and open <code>http://localhost:8000/web/</code>.</p>
           <p style="opacity:.6">${escapeHTML(msg)}</p>
         </div>`;
     }
 
     async function loadCards() {
-      // 1. Try inline data first (used by the standalone shareable build)
       const inline = document.getElementById('cards-data');
       if (inline) {
         const raw = inline.textContent
@@ -910,7 +1017,6 @@
           catch (e) { console.warn('inline cards-data parse failed', e); }
         }
       }
-      // 2. Fall back to fetching cards.json (dev workflow with local server)
       const candidates = ['../output/cards.json', 'output/cards.json'];
       let lastErr;
       for (const url of candidates) {
@@ -923,57 +1029,46 @@
       throw new Error(lastErr || 'cards.json not found');
     }
 
-    function setupProgress(total) {
-      const progress = $('#progress');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (!e.isIntersecting) return;
-          const el = e.target;
-          const pos = el.dataset.position;
-          const isImage = el.dataset.image === 'true';
-          const isEnd = el.dataset.end === 'true';
-          const isMast = el.classList.contains('masthead');
-          if (isMast) {
-            progress.classList.remove('visible');
-            return;
-          }
-          if (isEnd) {
-            progress.textContent = `${pad2(total)} / ${pad2(total)}`;
-            progress.classList.remove('over-dark');
-            progress.classList.add('visible');
-            return;
-          }
-          progress.textContent = `${pad2(parseInt(pos, 10))} / ${pad2(total)}`;
-          progress.classList.toggle('over-dark', isImage);
-          progress.classList.add('visible');
-        });
-      }, { threshold: 0.55 });
-      $$('.masthead, .card, .end-card').forEach(el => observer.observe(el));
-    }
+    async function buildPaper(data) {
+      // header meta
+      $('#edition-date').textContent = fmtEditionDate(data.data_now || data.generated_at).toUpperCase();
+      $('#edition-no').textContent = String(data.total_cards).padStart(3, '0');
 
-    async function render(data) {
-      $('#edition-meta').textContent =
-        `Edition · ${fmtDate(data.data_now || data.generated_at)}`;
-      $('#masthead-stats').innerHTML =
-        `<strong>${data.total_cards}</strong>
-         <span>stories · ~${(data.estimated_read_time_min ?? (data.total_cards * 0.22)).toFixed(1)} min</span>`;
+      // pick front page (top scored, one per section family)
+      const front = pickFrontPage(data.cards, 4);
+      const frontIds = new Set(front.map(c => c.msid));
+      const remaining = data.cards.filter(c => !frontIds.has(c.msid));
+      const sections = groupBySection(remaining);
 
-      // image preflight in parallel for image-positioned cards
-      const jobs = data.cards.map(async c =>
-        IMAGE_POSITIONS.has(c.position) ? [c, await resolveImage(c)] : [c, null]
-      );
-      const resolved = await Promise.all(jobs);
+      // resolve images: front-page lead + first card of each section get image attempt
+      const wantImages = new Set([
+        front[0].msid,
+        ...front.slice(1, 2).map(c => c.msid),  // optional 2nd front-page image
+        ...sections.map(g => g.cards[0].msid),
+      ]);
+      const images = { _total: data.total_cards };
+      await Promise.all(data.cards.map(async c => {
+        if (!wantImages.has(c.msid)) return;
+        const url = await resolveImage(c);
+        if (url) images[c.msid] = url;
+      }));
 
-      const html = resolved
-        .map(([c, url]) => url ? renderImage(c, url) : renderText(c))
-        .join('') + renderEnd(data);
+      // render
+      const html = [
+        renderFront(front, images),
+        ...sections.map((g, i) => renderSection(g, images, i)),
+        renderEnd(data),
+      ].join('');
+      $('#paper-body').innerHTML = html;
 
-      $('#deck').insertAdjacentHTML('beforeend', html);
-      setupProgress(data.total_cards);
+      // tabs + spy
+      renderTabs(sections);
+      // wait for next paint then spy
+      requestAnimationFrame(setupSpy);
     }
 
     loadCards()
-      .then(render)
+      .then(buildPaper)
       .catch(err => showError(err.message || String(err)));
   </script>
 </body>
