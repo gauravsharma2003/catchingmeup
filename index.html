@@ -607,8 +607,8 @@
       "msid": "130531024",
       "section": "economy_other",
       "section_family": "economy",
-      "headline": "Markets Outlook",
-      "summary": "Middle East tensions, crude prices and Q4 earnings could drive a volatile, holiday-shortened week.",
+      "headline": "",
+      "summary": "A holiday-shortened week brings no respite — Middle East tensions, swinging crude prices and a heavy Q4 earnings calendar are set to keep markets on edge.",
       "image_url": "",
       "url_msid": "130531024",
       "published_at": "2026-04-26T17:33:42",
@@ -844,6 +844,12 @@
         </div>`;
     }
 
+    function storyBody(c, tag) {
+      const head = (c.headline || '').trim();
+      return `${head ? `<${tag} class="headline">${escapeHTML(head)}</${tag}>` : ''}
+          ${c.summary ? `<p class="deck">${escapeHTML(c.summary)}</p>` : ''}`;
+    }
+
     function renderHero(c, imageUrl) {
       const img = imageUrl ? `
         <div class="image">
@@ -854,8 +860,7 @@
         <article class="story">
           ${img}
           ${storyKicker(c)}
-          <h2 class="headline">${escapeHTML(c.headline || '')}</h2>
-          <p class="deck">${escapeHTML(c.summary || '')}</p>
+          ${storyBody(c, 'h2')}
         </article>`;
     }
 
@@ -884,8 +889,7 @@
       return `
         <article class="story">
           ${storyKicker(c)}
-          <h3 class="headline">${escapeHTML(c.headline || '')}</h3>
-          <p class="deck">${escapeHTML(c.summary || '')}</p>
+          ${storyBody(c, 'h3')}
         </article>`;
     }
 
@@ -896,8 +900,7 @@
             <article class="story with-image">
               <div class="brief-text">
                 ${storyKicker(c)}
-                <h3 class="headline">${escapeHTML(c.headline || '')}</h3>
-                <p class="deck">${escapeHTML(c.summary || '')}</p>
+                ${storyBody(c, 'h3')}
               </div>
               <div class="image"><img src="${imageUrl}" alt="" loading="lazy" decoding="async"></div>
             </article>
@@ -907,8 +910,7 @@
         <div class="block-brief">
           <article class="story">
             ${storyKicker(c)}
-            <h3 class="headline">${escapeHTML(c.headline || '')}</h3>
-            <p class="deck">${escapeHTML(c.summary || '')}</p>
+            ${storyBody(c, 'h3')}
           </article>
         </div>`;
     }
