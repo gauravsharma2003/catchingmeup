@@ -138,30 +138,10 @@
       padding: 0 24px 10px;
       scroll-margin-top: 12px;
     }
-
-    .page-flag {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      gap: 14px;
-      padding: 10px 0 6px;
-      border-bottom: 1px solid var(--rule-strong);
-      font-family: 'Inter', sans-serif;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--ink-muted);
-    }
-    .page-flag .meta {
-      letter-spacing: 0.2em;
-      color: var(--ink-muted);
-      font-weight: 500;
-    }
-    .page-flag .section-name {
-      color: var(--ink);
-      letter-spacing: 0.22em;
-      text-align: right;
+    .page + .page {
+      border-top: 2px solid var(--rule-strong);
+      padding-top: 28px;
+      margin-top: 10px;
     }
 
     .section-title {
@@ -783,18 +763,31 @@
       religion: 'Society', labour: 'Work', governance: 'Government',
       disaster: 'Disaster', environment: 'Climate', society: 'Society',
     };
-    const FAMILY_BLURB = {
-      politics: 'Power, parties, parliament.',
-      war: 'Conflict, diplomacy, the world.',
-      justice: 'Courts, enforcement, crime.',
-      sports: 'Pitches, courts, rinks.',
-      economy: 'Markets, trade, money.',
-      business: 'Corporates, deals, leadership.',
-      science: 'Tech, AI, the future of work.',
-      health: 'Medicine, public health, science.',
-      lifestyle: 'Culture, food, leisure.',
-      religion: 'Faith, festivals, society.',
-      labour: 'Jobs, wages, workplaces.',
+
+    // Maps section_family → newspaper section key
+    const SECTION_MAP = {
+      politics: 'nation', governance: 'nation', justice: 'nation',
+      labour: 'nation', disaster: 'nation', society: 'nation',
+      economy: 'business', business: 'business',
+      war: 'global',
+      sports: 'sport',
+      lifestyle: 'lifestyle', health: 'lifestyle', religion: 'lifestyle',
+      environment: 'lifestyle', science: 'lifestyle',
+    };
+    const SECTION_ORDER = ['nation', 'business', 'global', 'sport', 'lifestyle'];
+    const SECTION_LABEL = {
+      nation:    'Times Nation',
+      business:  'Times Business',
+      global:    'Times Global',
+      sport:     'Times Sport',
+      lifestyle: 'Entertainment & Lifestyle',
+    };
+    const SECTION_BLURB = {
+      nation:    'Politics, governance, justice.',
+      business:  'Markets, trade, corporate.',
+      global:    'Conflict, diplomacy, the world.',
+      sport:     'Pitches, courts, rinks.',
+      lifestyle: 'Health, culture, entertainment.',
     };
 
     const $ = s => document.querySelector(s);
@@ -816,7 +809,6 @@
     }
 
     function familyLabel(fam) { return FAMILY_LABEL[fam] || (fam ? fam.charAt(0).toUpperCase() + fam.slice(1) : 'Story'); }
-    function familyBlurb(fam) { return FAMILY_BLURB[fam] || ''; }
 
     function preload(url) {
       return new Promise((res, rej) => {
@@ -852,14 +844,15 @@
     }
 
     function groupBySection(cards) {
-      const order = [];
       const groups = new Map();
       for (const c of cards) {
-        const k = c.section_family || 'other';
-        if (!groups.has(k)) { groups.set(k, []); order.push(k); }
+        const k = SECTION_MAP[c.section_family] || 'other';
+        if (!groups.has(k)) groups.set(k, []);
         groups.get(k).push(c);
       }
-      return order.map(k => ({ family: k, cards: groups.get(k) }));
+      const ordered = SECTION_ORDER.filter(k => groups.has(k));
+      const extra = [...groups.keys()].filter(k => !SECTION_ORDER.includes(k));
+      return [...ordered, ...extra].map(k => ({ section: k, cards: groups.get(k) }));
     }
 
     /* ===== Story render primitives ===== */
@@ -975,23 +968,18 @@
       }
       return `
         <section class="page" id="sec-front" data-section="front">
-          <div class="page-flag">
-            <span class="meta">Catch Me Up · ${escapeHTML(edition.dateline)}</span>
-            <span class="section-name">Front Page</span>
-          </div>
           <h2 class="section-title">Today.</h2>
           ${blocks.join('')}
         </section>`;
     }
 
     function composeSection(group, images, edition) {
-      const fam = group.family;
-      const label = familyLabel(fam);
-      const blurb = familyBlurb(fam);
+      const sec = group.section;
+      const label = SECTION_LABEL[sec] || sec;
+      const blurb = SECTION_BLURB[sec] || '';
       const cards = group.cards;
       const blocks = [];
 
-      // first story → hero
       blocks.push(renderHeroBlock(cards[0], images[cards[0].msid]));
 
       const rest = cards.slice(1);
@@ -999,7 +987,6 @@
       while (i < rest.length) {
         const remaining = rest.length - i;
         if (remaining >= 3) {
-          // optional pullquote between blocks for sections with 4+ cards
           if (cards.length >= 4 && i === 0 && rest[0].summary) {
             blocks.push(renderPullQuote(rest[0].summary, `${label} · ${rest[0].headline}`));
           }
@@ -1015,11 +1002,7 @@
       }
 
       return `
-        <section class="page" id="sec-${fam}" data-section="${fam}">
-          <div class="page-flag">
-            <span class="meta">Catch Me Up · ${escapeHTML(edition.dateline)}</span>
-            <span class="section-name">${escapeHTML(label)}</span>
-          </div>
+        <section class="page" id="sec-${sec}" data-section="${sec}">
           <h2 class="section-title">${escapeHTML(label)}<em>.</em></h2>
           ${blurb ? `<p class="section-blurb">${escapeHTML(blurb)}</p>` : ''}
           ${blocks.join('')}
@@ -1038,7 +1021,7 @@
 
     function renderInsideBar(sections) {
       const items = sections.map(s =>
-        `<a href="#sec-${s.family}">${escapeHTML(familyLabel(s.family))}</a>`
+        `<a href="#sec-${s.section}">${escapeHTML(SECTION_LABEL[s.section] || s.section)}</a>`
       );
       $('#inside-bar').innerHTML = `<span class="label">Inside today:</span>` + items.join('');
     }
