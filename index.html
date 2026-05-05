@@ -836,12 +836,7 @@
 
     function storyKicker(c) {
       const sec = familyLabel(c.section_family).toUpperCase();
-      const date = fmtDate(c.published_at);
-      return `
-        <div class="kicker">
-          <span>${escapeHTML(sec)}</span>
-          ${date ? `<span class="dot">·</span><span>${escapeHTML(date)}</span>` : ''}
-        </div>`;
+      return `<div class="kicker"><span>${escapeHTML(sec)}</span></div>`;
     }
 
     function storyBody(c, tag) {
